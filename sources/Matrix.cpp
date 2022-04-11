@@ -57,7 +57,7 @@ namespace zich{
     //Operators
     Matrix Matrix::operator + (const Matrix& other) const{
         if(this->getRow() != other.getRow() || this->getColumn() != other.getColumn()){
-            throw std::runtime_error("Operator (+) Error: Matrixs must be same dimension.");
+            throw std::runtime_error("Operator (+) Error: This Matrix and other Matrix Row/Column do not match.");
         }
         std::vector<double> vec;
         for(int i=0; i<this->getSize(); i++){
@@ -68,7 +68,7 @@ namespace zich{
 
     Matrix Matrix::operator - (const Matrix& other) const{
         if(this->getRow() != other.getRow() || this->getColumn() != other.getColumn()){
-            throw std::runtime_error("Operator (+) Error: Matrixs must be same dimension.");
+            throw std::runtime_error("Operator (-) Error: This Matrix and other Matrix Row/Column do not match.");
         }
         std::vector<double> vec;
         for(int i=0; i<this->getSize(); i++){
@@ -94,6 +94,18 @@ namespace zich{
         }
         return Matrix(vec, this->getRow(), other.getColumn());
     }
+    Matrix& Matrix::operator += (const Matrix& other){
+        if(this->getRow() != other.getRow() || this->getColumn() != other.getColumn()){
+            throw std::runtime_error("Operator (+=) Error: This Matrix and other Matrix Row/Column do not match.");
+        }
+        return (*this = *this + other);
+    }
+    Matrix& Matrix::operator -= (const Matrix& other){
+        if(this->getRow() != other.getRow() || this->getColumn() != other.getColumn()){
+            throw std::runtime_error("Operator (+=) Error: This Matrix and other Matrix Row/Column do not match.");
+        }
+        return (*this = *this - other);
+    }
 
     
 }
@@ -111,6 +123,12 @@ int main(){
     std::cout << "\nm2\n";
     m2.printMatrix();
     std::cout << "\nm5=m2 * m1\n";
+    m5.printMatrix();
+    std::cout << "\nm5+=m5\n";
+    m5 += m5;
+    m5.printMatrix();
+    std::cout << "\nm5-=m5\n";
+    m5 -= m5;
     m5.printMatrix();
     return 0;
 }

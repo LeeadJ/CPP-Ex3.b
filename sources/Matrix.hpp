@@ -41,6 +41,9 @@ namespace zich{
         Matrix operator + (const Matrix& other) const;  //m3 = m1 + m2;
         Matrix operator - (const Matrix& other) const;
         Matrix operator * (const Matrix& other) const;
+        
+        Matrix& operator += (const Matrix& other);
+        Matrix& operator -= (const Matrix& other);
         //Unary Operators
     };
 }
