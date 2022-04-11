@@ -35,15 +35,23 @@ namespace zich{
 
         //Functions
         void printMatrix() const;
+        double const sum() const; 
 
         //Operators
         //Binary Operators
         Matrix operator + (const Matrix& other) const;  //m3 = m1 + m2;
         Matrix operator - (const Matrix& other) const;
         Matrix operator * (const Matrix& other) const;
-        
+
         Matrix& operator += (const Matrix& other);
         Matrix& operator -= (const Matrix& other);
+
+        bool operator == (const Matrix& other) const;
+        bool operator != (const Matrix& other) const;
+        bool operator >= (const Matrix& other) const;
+        bool operator <= (const Matrix& other) const;
+        bool operator > (const Matrix& other) const;
+        bool operator < (const Matrix& other) const;
         //Unary Operators
     };
 }
