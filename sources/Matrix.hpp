@@ -19,10 +19,10 @@ namespace zich{
         std::vector<double> getVector() const {return this->mat;}
 
         //Setters
-        void setRow(int r);
-        void setColumn(int c);
-        void setSize(int s);
-        void setVector(std::vector<double> other);
+        void setRow(int r){this->_row = r;}
+        void setColumn(int c){this->_col = c;}
+        void setSize(int s){this->_size = s;}
+        void setVector(std::vector<double> other={0}){this->mat = other;}
         void setMatrix(std::vector<double> m={0}, int r=1, int c=1);
 
         //Constructors
@@ -40,6 +40,7 @@ namespace zich{
         //Binary Operators
         Matrix operator + (const Matrix& other) const;  //m3 = m1 + m2;
         Matrix operator - (const Matrix& other) const;
+        Matrix operator * (const Matrix& other) const;
         //Unary Operators
     };
 }

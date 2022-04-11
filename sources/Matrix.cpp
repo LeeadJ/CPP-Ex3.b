@@ -4,37 +4,19 @@
 
 namespace zich{
     //Setters
-    void Matrix::setRow(int r) {
-        if(r < 1){
-            throw std::runtime_error("SetRow Error: Row must be greater than 0.");
+    void Matrix::setMatrix(std::vector<double> m, int r, int c){
+        if(r < 1 || c < 1){
+            throw std::runtime_error("SetMatrix Error: Row must be greater than 0.");
         }
-        this->_row = r;
-    }
-    void Matrix::setColumn(int c) {
-        if(c < 1){
-            throw std::runtime_error("SetColumn Error: Column must be greater than 0.");
-        }
-        this->_col = c;
-    }
-    void Matrix::setSize(int s) {
-        // if(s != this->getColumn()*this->getRow()){
-        //     throw std::runtime_error("SetSize Error: Size does not match Row*Column value.");
-        // }
-        this->_size = s;
-    }
-    void Matrix::setVector(std::vector<double> other) {
-        for(int i=0; i<other.size(); i++){
-            if(sizeof(other.at(i)) != 8){
-                throw std::runtime_error("setVector Error: Vector element is not of type double.");
+        for(int i=0; i<m.size(); i++){
+            if(sizeof(m.at(i)) != 8){
+                throw std::runtime_error("SetMatrix Error: Vector element is not of type double.");
             }
         }
-        this->mat = other;
-    }
-    void Matrix::setMatrix(std::vector<double> m, int r, int c){
-        this->setVector(m);
         this->setRow(r);
-        this->setSize(r*c);
         this->setColumn(c);
+        this->setSize(r*c);
+        this->setVector(m);
         
     }
     //Constructors
@@ -94,31 +76,41 @@ namespace zich{
         }
         return Matrix(vec, this->getRow(), this->getColumn());
     }
+    Matrix Matrix::operator * (const Matrix& other) const{
+        if(this->getColumn() != other.getRow()){
+            throw std::runtime_error("Operator (*) Error: Matrix1 Column does not equal Matrix2 Row.");
+        }
+        std::vector<double> vec(this->getRow()*other.getColumn(), 0.0);
+        int spot = 0;
+        for(int i=0; i<this->getRow(); i++){
+            for(int j=0; j<other.getColumn(); j++){
+                for(int k=0; k<this->getColumn(); k++){
+                    int index1 = (i*this->getColumn()) + k;
+                    int index2 = (k*other.getColumn()) + j;
+                    vec.at(spot) += this->getVector().at(index1) * other.getVector().at(index2);
+                }
+                spot++;
+            }
+        }
+        return Matrix(vec, this->getRow(), other.getColumn());
+    }
 
     
 }
 
 
 int main(){
-    // zich::Matrix m1;
-    // m1.printMatrix();
-    // std::cout << m1.getSize() << std::endl;
-    std::vector<double> v1 = {1,0,0,0,1,0,0,0,1};
-    std::vector<double> v2 = {5,5,5,5,5,5,5,5,5};
-    zich::Matrix m1{v1, 3, 3};
-    zich::Matrix m2{v2, 3, 3};
-    // m2.printMatrix();
-    // std::cout << m2.getSize() << std::endl;
-    zich::Matrix m3 = m2 + m1;
-    zich::Matrix m4 = m2 - m1;
-    std::cout << "m1\n";
+    
+    std::vector<double> v3 = {1,2,0,1,1,1};
+    std::vector<double> v4 = {2,1,3,1,2,0};
+    zich::Matrix m1{v3, 3, 2};
+    zich::Matrix m2{v4, 2, 3};
+    zich::Matrix m5 = m1 * m2;
+    std::cout << "\nm1\n";
     m1.printMatrix();
     std::cout << "\nm2\n";
     m2.printMatrix();
-    std::cout << "\nm3=m2+m1\n";
-    m3.printMatrix();
-    std::cout << "\nm4=m2-m1\n";
-    m4.printMatrix();
-
+    std::cout << "\nm5=m2 * m1\n";
+    m5.printMatrix();
     return 0;
 }
