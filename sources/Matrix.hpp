@@ -34,7 +34,9 @@ namespace zich{
         ~Matrix();
 
         //Functions
+        /*This function prints the matrix.*/
         void printMatrix() const;
+        /*This function returns the sum of the matrix.*/
         double const sum() const; 
 
         //Operators
@@ -42,6 +44,7 @@ namespace zich{
         Matrix operator + (const Matrix& other) const;  //m3 = m1 + m2;
         Matrix operator - (const Matrix& other) const;
         Matrix operator * (const Matrix& other) const;
+        
 
         Matrix& operator += (const Matrix& other);
         Matrix& operator -= (const Matrix& other);

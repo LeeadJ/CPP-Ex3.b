@@ -33,6 +33,7 @@ namespace zich{
     Matrix::~Matrix(){};
 
     //Functions
+    /*This function prints the matrix.*/
     void Matrix::printMatrix() const{
         int r = this->getRow();
         int c = this->getColumn();
@@ -42,7 +43,6 @@ namespace zich{
             for(int j=0; j<c; j++){
                 std::stringstream stream;
                 stream << std::fixed << std::setprecision(2) << this->getVector()[(i*c)+j];
-                // ans += std::to_string(this->getVector()[(i*c)+j]);
                 ans += stream.str();
                 stream.str("");
                 ans += " ";
@@ -54,6 +54,7 @@ namespace zich{
         std::cout << ans << std::endl;
     }
 
+    /*This function returns the sum of the matrix.*/
     double const Matrix::sum() const{
         double ans = 0;
         for(double d : this->getVector()){
@@ -63,7 +64,7 @@ namespace zich{
     }
 
     //Operators
-    //Oerator (+):
+    //Operator (+):
     Matrix Matrix::operator + (const Matrix& other) const{
         if(this->getRow() != other.getRow() || this->getColumn() != other.getColumn()){
             throw std::runtime_error("Operator (+) Error: 'This' Matrix and 'other' Matrix Row/Column do not match.");
@@ -75,7 +76,7 @@ namespace zich{
         return Matrix(vec, this->getRow(), this->getColumn());
     }
 
-    //Oerator (-):
+    //Operator (-):
     Matrix Matrix::operator - (const Matrix& other) const{
         if(this->getRow() != other.getRow() || this->getColumn() != other.getColumn()){
             throw std::runtime_error("Operator (-) Error: 'This' Matrix and 'other' Matrix Row/Column do not match.");
@@ -87,7 +88,7 @@ namespace zich{
         return Matrix(vec, this->getRow(), this->getColumn());
     }
 
-    //Oerator (*):
+    //Operator (*):
     Matrix Matrix::operator * (const Matrix& other) const{
         if(this->getColumn() != other.getRow()){
             throw std::runtime_error("Operator (*) Error: Matrix1 Column does not equal Matrix2 Row.");
@@ -106,21 +107,22 @@ namespace zich{
         }
         return Matrix(vec, this->getRow(), other.getColumn());
     }
-    //Oerator (+=):
+
+    //Operator (+=):
     Matrix& Matrix::operator += (const Matrix& other){
         if(this->getRow() != other.getRow() || this->getColumn() != other.getColumn()){
             throw std::runtime_error("Operator (+=) Error: 'This' Matrix and 'other' Matrix Row/Column do not match.");
         }
         return (*this = *this + other);
     }
-    //Oerator (-=):
+    //Operator (-=):
     Matrix& Matrix::operator -= (const Matrix& other){
         if(this->getRow() != other.getRow() || this->getColumn() != other.getColumn()){
             throw std::runtime_error("Operator (+=) Error: 'This' Matrix and 'other' Matrix Row/Column do not match.");
         }
         return (*this = *this - other);
     }
-    //Oerator (==):
+    //Operator (==):
     bool Matrix::operator == (const Matrix& other) const{
         if(this->getRow() != other.getRow() || this->getColumn() != other.getColumn()){
             throw std::runtime_error("Operator (==) Error: 'This' Matrix and 'other' Matrix Row/Column do not match.");
@@ -133,7 +135,7 @@ namespace zich{
         return true;
     }
 
-    //Oerator (!=):
+    //Operator (!=):
     bool Matrix::operator != (const Matrix& other) const{
         if(this->getRow() != other.getRow() || this->getColumn() != other.getColumn()){
             throw std::runtime_error("Operator (!=) Error: This Matrix and 'other' Matrix Row/Column do not match.");
@@ -141,7 +143,7 @@ namespace zich{
         return !(*this == other);
     }
 
-    //Oerator (>=):
+    //Operator (>=):
     bool Matrix::operator >= (const Matrix& other) const{
         if(this->getRow() != other.getRow() || this->getColumn() != other.getColumn()){
             throw std::runtime_error("Operator (>=) Error: This Matrix and 'other' Matrix Row/Column do not match.");
@@ -149,7 +151,7 @@ namespace zich{
         return this->sum() >= other.sum();
     }
 
-    //Oerator (<=):
+    //Operator (<=):
     bool Matrix::operator <= (const Matrix& other) const{
         if(this->getRow() != other.getRow() || this->getColumn() != other.getColumn()){
             throw std::runtime_error("Operator (>=) Error: This Matrix and 'other' Matrix Row/Column do not match.");
@@ -157,7 +159,7 @@ namespace zich{
         return this->sum() <= other.sum();
     }
 
-    //Oerator (>):
+    //Operator (>):
     bool Matrix::operator > (const Matrix& other) const{
         if(this->getRow() != other.getRow() || this->getColumn() != other.getColumn()){
             throw std::runtime_error("Operator (>=) Error: This Matrix and 'other' Matrix Row/Column do not match.");
@@ -165,7 +167,7 @@ namespace zich{
         return this->sum() > other.sum();
     }
 
-    //Oerator (<):
+    //Operator (<):
     bool Matrix::operator < (const Matrix& other) const{
         if(this->getRow() != other.getRow() || this->getColumn() != other.getColumn()){
             throw std::runtime_error("Operator (>=) Error: This Matrix and 'other' Matrix Row/Column do not match.");
@@ -186,26 +188,8 @@ int main(){
     std::vector<double> v4 = {2,1,3,1,2,0};
     zich::Matrix m1{v3, 3, 2};
     zich::Matrix m2{v2, 3, 2};
-    cout << "m1 sum: " <<m1.sum() << endl;
-    cout << "m2 sum: " <<m2.sum() << endl;
-    cout << "\nm1==m2\n" << endl;
-    bool a = m1==m2;
-    cout << a << endl;
-    cout << "\nm1>=m2\n" << endl;
-    bool b = m1>=m2;
-    cout << b << endl;
-    cout << "\nm1<=m2\n" << endl;
-    bool c = m1<=m2;
-    cout << c << endl;
-    cout << "\nm1!=m2\n" << endl;
-    bool d = m1!=m2;
-    cout << d << endl;
-    cout << "\nm1>m2\n" << endl;
-    bool e = m1>m2;
-    cout << e << endl;
-    cout << "\nm1<m2\n" << endl;
-    bool f = m1<m2;
-    cout << f << endl;
+    m2*2;
+    m2.printMatrix();
     // std::cout << "\nm1\n";
     // m1.printMatrix();
     // std::cout << "\nm2\n";
