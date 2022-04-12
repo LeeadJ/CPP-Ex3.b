@@ -41,7 +41,7 @@ namespace zich{
 
         //Operators
         //Binary Operators
-        Matrix operator + (const Matrix& other) const;  //m3 = m1 + m2;
+        Matrix operator + (const Matrix& other) const;  
         Matrix operator - (const Matrix& other) const;
         Matrix operator * (const Matrix& other) const;
         
@@ -55,11 +55,15 @@ namespace zich{
         bool operator <= (const Matrix& other) const;
         bool operator > (const Matrix& other) const;
         bool operator < (const Matrix& other) const;
+
         //Unary Operators
         Matrix& operator ++ ();
         Matrix& operator -- ();
         Matrix& operator - ();
         Matrix& operator + ();
+
+        Matrix operator ++ (int); //postfix
+        Matrix operator -- (int); //postfix
     };
 
     

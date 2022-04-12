@@ -193,7 +193,7 @@ namespace zich{
         this->setVector(vec);
         return *this;
     }
-    //Operator (-prefix):
+    //Operator (- prefix):
     Matrix& Matrix::operator - () {
         std::vector<double> vec;
         for(int i=0; i<this->getSize(); i++){
@@ -202,13 +202,22 @@ namespace zich{
         this->setVector(vec);
         return *this;
     }
-    // void Matrix::operator + () {
-    //     std::vector<double> vec;
-    //     for(int i=0; i<this->getSize(); i++){
-    //         vec.push_back(this->getVector().at(i) *(-1.0));
-    //     }
-    //     this->setVector(vec);
-    // }
+    //Operator (+ prefix):
+    Matrix& Matrix::operator + () {
+        return *this;
+    }
+    //Operator (postfix++)):
+    Matrix Matrix::operator ++ (int){
+        Matrix temp(*this);
+        ++(*this);
+        return temp;
+    }
+    //Operator (postfix--)):
+    Matrix Matrix::operator -- (int){
+        Matrix temp(*this);
+        --(*this);
+        return temp;
+    }
     
         
         
@@ -227,15 +236,18 @@ int main(){
     zich::Matrix m2{v2, 3, 2};
     cout<<"m2:"<<endl;
     m2.printMatrix();
-    cout<<"++m2:"<<endl;
-    ++m2;
+
+    cout<<"m3:"<<endl;
+    zich::Matrix m3 = m2--;
+    m3.printMatrix();
+
+    cout<<"m2:"<<endl;
     m2.printMatrix();
-    cout<<"-m2:"<<endl;
-    -m2;
+
+    cout<<"m2--:"<<endl;
+    m2--;
     m2.printMatrix();
-    cout<<"--m2:"<<endl;
-    --m2;
-    m2.printMatrix();
+
     
     // cout<<"m3:"<<endl;
     // zich::Matrix m3 = ++m2;
