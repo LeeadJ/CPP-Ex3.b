@@ -225,7 +225,16 @@ namespace zich{
         --(*this);
         return temp;
     }
-    
+
+    //Friend Operators:
+    //Operator (num*Matrix)):
+    Matrix operator * (double num, const Matrix& other){
+        std::vector<double> vec;
+        for(int i=0; i<other.getSize(); i++){
+            vec.push_back(num * other.getVector().at(i));
+        }
+        return Matrix(vec, other.getRow(), other.getColumn());
+    }
         
         
     
@@ -245,15 +254,9 @@ int main(){
     m2.printMatrix();
 
     cout<<"m3:"<<endl;
-    zich::Matrix m3 = m2--;
+    zich::Matrix m3 = 3.9*m2;
     m3.printMatrix();
 
-    cout<<"m2:"<<endl;
-    m2.printMatrix();
-
-    cout<<"m2--:"<<endl;
-    m2--;
-    m2.printMatrix();
 
     
     // cout<<"m3:"<<endl;
