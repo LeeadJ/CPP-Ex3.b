@@ -174,10 +174,28 @@ namespace zich{
         }
         return this->sum() < other.sum();
     }
-
-
+    //Unary Operators:
+    //Operator (++prefix):
+    void Matrix::operator ++ () {
+        std::vector<double> vec;
+        for(int i=0; i<this->getSize(); i++){
+            vec.push_back(this->getVector().at(i) + 1.0);
+        }
+        this->setVector(vec);
+    }
+    //Operator (--prefix):
+    void Matrix::operator -- () {
+        std::vector<double> vec;
+        for(int i=0; i<this->getSize(); i++){
+            vec.push_back(this->getVector().at(i) - 1.0);
+        }
+        this->setVector(vec);
+    }
+        
+        
     
 }
+    
 
 
 int main(){
@@ -188,20 +206,13 @@ int main(){
     std::vector<double> v4 = {2,1,3,1,2,0};
     zich::Matrix m1{v3, 3, 2};
     zich::Matrix m2{v2, 3, 2};
-    m2*2;
+    cout<<"m2:"<<endl;
     m2.printMatrix();
-    // std::cout << "\nm1\n";
-    // m1.printMatrix();
-    // std::cout << "\nm2\n";
-    // m2.printMatrix();
-    // std::cout << "\nm5=m2 * m1\n";
-    // m5.printMatrix();
-    // std::cout << "\nm5+=m5\n";
-    // m5 += m5;
-    // m5.printMatrix();
-    // std::cout << "\nm5-=m5\n";
-    // m5 -= m5;
-    // m5.printMatrix();
+    cout<<"++m2:"<<endl;
+    ++m2;
+    m2.printMatrix();
+    
+    
 
     return 0;
 }
