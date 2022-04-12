@@ -38,6 +38,7 @@ namespace zich{
         void printMatrix() const;
         /*This function returns the sum of the matrix.*/
         double const sum() const; 
+        
 
         //Operators
         //Binary Operators
@@ -67,7 +68,10 @@ namespace zich{
 
         //Friend Operators:
         friend Matrix operator * (double num, const Matrix& other);
+        friend std::ostream& operator << (std::ostream& out, const Matrix& other);
+        friend std::istream& operator >> (std::istream& in,  Matrix& other);
     };
+    
 
     
 }

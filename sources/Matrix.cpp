@@ -1,6 +1,9 @@
 #include "Matrix.hpp"
 #include <iomanip>
 #include <sstream>
+#include <iostream>
+#include <istream>
+#include <string>
 
 namespace zich{
     //Setters
@@ -235,6 +238,83 @@ namespace zich{
         }
         return Matrix(vec, other.getRow(), other.getColumn());
     }
+    //Operator (cout)):
+    std::ostream& operator << (std::ostream& out, const Matrix& other){
+        int r = other.getRow();
+        int c = other.getColumn();
+        std::string ans;
+        for(int i=0; i<r; i++){
+            ans += "[";
+            for(int j=0; j<c; j++){
+                std::stringstream stream;
+                stream << std::fixed << std::setprecision(2) << other.getVector()[(i*c)+j];
+                ans += stream.str();
+                stream.str("");
+                ans += " ";
+            }
+            ans.pop_back();
+            ans += "]\n";
+        }
+        ans.pop_back();
+        out << ans << std::endl;
+        return out;
+    }
+    //Operator (cin)):
+    std::istream& operator >> (std::istream& in,  Matrix& other){
+        std::vector<double> vec_final;
+        int row_final=0, col_final=0;
+        //I will grab the content in the istream and covert it to a string using std::getline() in a loop:
+        std::string str, sub; //for storing each line of the input
+        std::string input; //for combining the lines
+        while(std::getline(in, str)){ //incase the input is on defferent lines.
+            input += str;
+        }
+        
+        //Checking if the vector starts and ends with ']':
+        if(input[0] != '[' || input.back() != ']'){
+            throw std::runtime_error("Operator (cin) Error: Input missing '[' or ']' character.");
+        }
+        
+        //creating a <string>vector for all the rows of the input:
+        std::vector<std::string> vec_str;
+        std::string delimiter = ", ";
+        while(input.find(delimiter) != std::string::npos){
+            std::string token = input.substr(0, input.find(delimiter));
+            vec_str.push_back(token);
+            row_final++;
+            input.erase(0, input.find(delimiter) + delimiter.length());
+        }
+        if(input.length() > 0){
+            vec_str.push_back(input);
+            row_final++;
+        }
+        
+        for(int i=0; i<row_final; i++){
+            std::string temp = vec_str.at(i);
+            temp.erase(temp.length()-1, 1); //erasing the last character ']'
+            temp.erase(0, 1); //erasing the first character '['
+            
+            std::stringstream Y(temp); // Y is an object of stringstream that references 'temp' string.
+            std::string single_num;
+            double currD;
+            while(getline(Y, single_num, ' ')){
+                try{
+                    currD = std::stod(single_num);
+                }
+                catch(...){
+                    throw std::runtime_error("Operator (cin) Error: Unable to convert string to double.");
+                }
+                vec_final.push_back(currD);
+                col_final++;
+            }
+        }
+        other.setRow(row_final);
+        other.setColumn(col_final);
+        other.setVector(vec_final);
+        other.setSize(row_final*col_final);
+        return in;
+    }
+    
         
         
     
@@ -250,12 +330,17 @@ int main(){
     std::vector<double> v4 = {2,1,3,1,2,0};
     zich::Matrix m1{v3, 3, 2};
     zich::Matrix m2{v2, 3, 2};
-    cout<<"m2:"<<endl;
-    m2.printMatrix();
+    // cout<<"m2:"<<endl;
+    // m2.printMatrix();
 
-    cout<<"m3:"<<endl;
-    zich::Matrix m3 = 3.9*m2;
-    m3.printMatrix();
+    // cout<<"m3:"<<endl;
+    // zich::Matrix m3 = 3.9*m2;
+    // cout << m3;
+    string vec = "[1 2 3], [4 5 6]";
+    zich::Matrix m4;
+    cout << "Enter string:";
+    cin >> m4;
+    cout <<m4<<endl;
 
 
     
