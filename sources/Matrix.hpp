@@ -48,6 +48,7 @@ namespace zich{
 
         Matrix& operator += (const Matrix& other);
         Matrix& operator -= (const Matrix& other);
+        Matrix& operator *= (const Matrix& other);
 
         bool operator == (const Matrix& other) const;
         bool operator != (const Matrix& other) const;

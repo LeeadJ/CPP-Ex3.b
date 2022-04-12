@@ -118,9 +118,16 @@ namespace zich{
     //Operator (-=):
     Matrix& Matrix::operator -= (const Matrix& other){
         if(this->getRow() != other.getRow() || this->getColumn() != other.getColumn()){
-            throw std::runtime_error("Operator (+=) Error: 'This' Matrix and 'other' Matrix Row/Column do not match.");
+            throw std::runtime_error("Operator (-=) Error: 'This' Matrix and 'other' Matrix Row/Column do not match.");
         }
         return (*this = *this - other);
+    }
+    //Operator (*=):
+    Matrix& Matrix::operator *= (const Matrix& other){
+        if(this->getColumn() != other.getRow()){
+            throw std::runtime_error("Operator (*=) Error: 'This' Matrix and 'other' Matrix Row/Column do not match.");
+        }
+        return (*this = *this * other);
     }
     //Operator (==):
     bool Matrix::operator == (const Matrix& other) const{
