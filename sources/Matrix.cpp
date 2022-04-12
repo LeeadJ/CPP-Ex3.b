@@ -176,21 +176,40 @@ namespace zich{
     }
     //Unary Operators:
     //Operator (++prefix):
-    void Matrix::operator ++ () {
+    Matrix& Matrix::operator ++ () {
         std::vector<double> vec;
         for(int i=0; i<this->getSize(); i++){
             vec.push_back(this->getVector().at(i) + 1.0);
         }
         this->setVector(vec);
+        return *this;
     }
     //Operator (--prefix):
-    void Matrix::operator -- () {
+    Matrix& Matrix::operator -- () {
         std::vector<double> vec;
         for(int i=0; i<this->getSize(); i++){
             vec.push_back(this->getVector().at(i) - 1.0);
         }
         this->setVector(vec);
+        return *this;
     }
+    //Operator (-prefix):
+    Matrix& Matrix::operator - () {
+        std::vector<double> vec;
+        for(int i=0; i<this->getSize(); i++){
+            vec.push_back(this->getVector().at(i) *(-1.0));
+        }
+        this->setVector(vec);
+        return *this;
+    }
+    // void Matrix::operator + () {
+    //     std::vector<double> vec;
+    //     for(int i=0; i<this->getSize(); i++){
+    //         vec.push_back(this->getVector().at(i) *(-1.0));
+    //     }
+    //     this->setVector(vec);
+    // }
+    
         
         
     
@@ -211,8 +230,16 @@ int main(){
     cout<<"++m2:"<<endl;
     ++m2;
     m2.printMatrix();
+    cout<<"-m2:"<<endl;
+    -m2;
+    m2.printMatrix();
+    cout<<"--m2:"<<endl;
+    --m2;
+    m2.printMatrix();
     
-    
+    // cout<<"m3:"<<endl;
+    // zich::Matrix m3 = ++m2;
+    // m3.printMatrix();
 
     return 0;
 }

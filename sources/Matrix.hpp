@@ -56,9 +56,10 @@ namespace zich{
         bool operator > (const Matrix& other) const;
         bool operator < (const Matrix& other) const;
         //Unary Operators
-        void operator ++ ();
-        void operator -- ();
-        // Matrix operator - ();
+        Matrix& operator ++ ();
+        Matrix& operator -- ();
+        Matrix& operator - ();
+        Matrix& operator + ();
     };
 
     
