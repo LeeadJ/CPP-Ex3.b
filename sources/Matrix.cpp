@@ -7,22 +7,6 @@
 
 const int DOUBLE_SIZE = 8;
 namespace zich{
-    //Setters
-    void Matrix::setMatrix(std::vector<double> &m, int r, int c){
-        if(r < 1 || c < 1){
-            throw std::runtime_error("SetMatrix Error: Row must be greater than 0.");
-        }
-        for(int i=0; i<(m.size()); i++){
-            if(sizeof(m.at(i)) != DOUBLE_SIZE){
-                throw std::runtime_error("SetMatrix Error: Vector element is not of type double.");
-            }
-        }
-        this->setRow(r);
-        this->setColumn(c);
-        this->setSize(r*c);
-        this->setVector(m);
-        
-    }
     //Constructors
     Matrix::Matrix(){
         std::vector<double> vec = {0};
@@ -31,8 +15,19 @@ namespace zich{
         this->setVector(vec);
         this->setSize(1);
     }
-    Matrix::Matrix(std::vector<double> &m, int r, int c){
-        this->setMatrix(m, r, c);
+    Matrix::Matrix(const std::vector<double> &m, const int r, const int c){
+        if(r < 1 || c < 1){
+            throw std::runtime_error("Matrix Constructor Error: Row must be greater than 0.");
+        }
+        for(int i=0; i<(m.size()); i++){
+            if(sizeof(m.at(i)) != DOUBLE_SIZE){
+                throw std::runtime_error("Matrix Constructor Error: Vector element is not of type double.");
+            }
+        }
+        this->setRow(r);
+        this->setColumn(c);
+        this->setSize(r*c);
+        this->setVector(m);
     }
     Matrix::Matrix(const Matrix& other){
         *this = other;
@@ -122,7 +117,7 @@ namespace zich{
         for(int i=0; i<this->getSize(); i++){
             vec.push_back(this->getVector().at(i) * num);
         }
-        return Matrix(vec, this->getRow(), other.getColumn());
+        return Matrix(vec, this->getRow(), this->getColumn());
     }
 
     //Operator (+=):
@@ -423,8 +418,8 @@ int main(){
     std::vector<double> v3 = {1,2,0,1,1,1};
     std::vector<double> v4 = {2,1,3,1,2,0};
     zich::Matrix m1{v3, 3, 2};
-    zich::Matrix m2{v2, 3, 2};
-    m2 *= 4;
+    zich::Matrix m2({1,1,1,1,1,1}, 3, 2);
+    
     m2.printMatrix();
     // cout<<"m2:"<<endl;
     // m2.printMatrix();

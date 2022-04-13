@@ -23,11 +23,11 @@ namespace zich{
         void setColumn(int c){this->_col = c;}
         void setSize(int s){this->_size = s;}
         void setVector(std::vector<double> other={0}){this->mat = other;}
-        void setMatrix(std::vector<double> &m, int r=1, int c=1);
+        
 
         //Constructors
         Matrix();
-        Matrix(std::vector<double> &m, int r, int c);
+        Matrix(const std::vector<double> &m, const int r, const int c);
         Matrix(const Matrix& other);
 
         //Destructor
