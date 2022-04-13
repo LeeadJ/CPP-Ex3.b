@@ -23,11 +23,11 @@ namespace zich{
         void setColumn(int c){this->_col = c;}
         void setSize(int s){this->_size = s;}
         void setVector(std::vector<double> other={0}){this->mat = other;}
-        void setMatrix(std::vector<double> m={0}, int r=1, int c=1);
+        void setMatrix(std::vector<double> &m, int r=1, int c=1);
 
         //Constructors
         Matrix();
-        Matrix(std::vector<double> m, int r, int c);
+        Matrix(std::vector<double> &m, int r, int c);
         Matrix(const Matrix& other);
 
         //Destructor
@@ -37,7 +37,7 @@ namespace zich{
         /*This function prints the matrix.*/
         void printMatrix() const;
         /*This function returns the sum of the matrix.*/
-        double const sum() const; 
+        double sum() const; 
         
 
         //Operators
@@ -45,10 +45,13 @@ namespace zich{
         Matrix operator + (const Matrix& other) const;  
         Matrix operator - (const Matrix& other) const;
         Matrix operator * (const Matrix& other) const;
+        Matrix operator * (const double num) const;
+        
         
         Matrix& operator += (const Matrix& other);
         Matrix& operator -= (const Matrix& other);
         Matrix& operator *= (const Matrix& other);
+        Matrix& operator *= (const double num);
 
         bool operator == (const Matrix& other) const;
         bool operator != (const Matrix& other) const;
@@ -67,9 +70,10 @@ namespace zich{
         Matrix& operator + ();
 
         //Friend Operators:
-        friend Matrix operator * (double num, const Matrix& other);
+        friend Matrix operator * (const double num, const Matrix& other);
         friend std::ostream& operator << (std::ostream& out, const Matrix& other);
         friend std::istream& operator >> (std::istream& in,  Matrix& other);
+        
     };
     
 
