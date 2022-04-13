@@ -10,27 +10,36 @@ namespace zich{
     //Constructors
     Matrix::Matrix(){
         std::vector<double> vec = {0};
-        this->setColumn(1);
-        this->setRow(1);
-        this->setVector(vec);
-        this->setSize(1);
+        this->_col = 1;
+        this->_row = 1;
+        this->_mat = vec;
+        this->_size = 1;
     }
-    Matrix::Matrix(const std::vector<double> &m, const int r, const int c){
+    Matrix::Matrix(const std::vector<double> &m, int r, int c){
         if(r < 1 || c < 1){
             throw std::runtime_error("Matrix Constructor Error: Row must be greater than 0.");
+        }
+        if(r*c != m.size()){
+            throw std::runtime_error("Matrix Constructor Error: Vector size does not match row*column input.");
+        }
+        if(m.empty()){
+            throw std::runtime_error("Matrix Constructor Error: Vector is empty.");
         }
         for(int i=0; i<(m.size()); i++){
             if(sizeof(m.at(i)) != DOUBLE_SIZE){
                 throw std::runtime_error("Matrix Constructor Error: Vector element is not of type double.");
             }
         }
-        this->setRow(r);
-        this->setColumn(c);
-        this->setSize(r*c);
+        this->_row = r;
+        this->_col = c;
+        this->_size = r*c;
         this->setVector(m);
     }
     Matrix::Matrix(const Matrix& other){
-        *this = other;
+        this->_col = other.getColumn();
+        this->_row = other.getRow();
+        this->_size = other.getSize();
+        this->_mat = other.getVector();
     }
     //Destructor
     Matrix::~Matrix(){};
@@ -418,52 +427,52 @@ namespace zich{
     
 
 
-int main(){
-    using namespace std;
-    std::vector<double> v1 = {0,0,0,0,0,0};
-    std::vector<double> v2 = {1,1,1,1,1,1};
-    std::vector<double> v3 = {1,2,0,1,1,1};
-    std::vector<double> v4 = {2,1,3,1,2,0};
-    zich::Matrix m1{v3, 3, 2};
-    zich::Matrix m2({1,1,1,1,1,1}, 3, 2);
+// int main(){
+//     using namespace std;
+//     std::vector<double> v1 = {0,0,0,0,0,0};
+//     std::vector<double> v2 = {1,1,1,1,1,1};
+//     std::vector<double> v3 = {1,2,0,1,1,1};
+//     std::vector<double> v4 = {2,1,3,1,2,0};
+//     zich::Matrix m1{v3, 3, 2};
+//     zich::Matrix m2({1,1,1,1,1,1}, 3, 2);
     
-    m2.printMatrix();
-    // cout<<"m2:"<<endl;
-    // m2.printMatrix();
+//     m2.printMatrix();
+//     // cout<<"m2:"<<endl;
+//     // m2.printMatrix();
 
-    // cout<<"m3:"<<endl;
-    // zich::Matrix m3 = 3.9*m2;
-    // cout << m3;
-    string vec = "[1 2.2 3], [4.98 5 6], [77.5 8 9], [0 11 12]";
-    zich::Matrix m4;
-    // cout << m4.getColumn()<<endl;
-    // cout << m4.getRow()<<endl;
-    // cout << m4.getSize()<<endl;
-    // m4.printMatrix();
+//     // cout<<"m3:"<<endl;
+//     // zich::Matrix m3 = 3.9*m2;
+//     // cout << m3;
+//     string vec = "[1 2.2 3], [4.98 5 6], [77.5 8 9], [0 11 12]";
+//     zich::Matrix m4;
+//     // cout << m4.getColumn()<<endl;
+//     // cout << m4.getRow()<<endl;
+//     // cout << m4.getSize()<<endl;
+//     // m4.printMatrix();
     
-    // cout << "Enter string:";
-    // cin >> m4;
-    // cout <<m4;
-    // string temp = "[1 2.2 3]";
-    // std::string allowedChar = "0123456789. ";
-    // std::cout<< "temp:" << temp << std::endl;
-    // temp.erase(temp.length()-1, 1); //erasing the last character ']'
-    // std::cout<< "temp after erasing last:" << temp << std::endl;
-    // temp.erase(0, 1); //erasing the first character '['
-    // std::cout<< "temp after erasing first:" << temp << std::endl;
-    // for(int i=0; i<temp.length(); i++){
-    //     if(allowedChar.find(temp.at(i)) == std::string::npos){
-    //         throw std::runtime_error("Operator (cin) Error: Invalid Input.");
-    //     }
-    // }
-    // cout<<"COMPLETE"<<endl;
+//     // cout << "Enter string:";
+//     // cin >> m4;
+//     // cout <<m4;
+//     // string temp = "[1 2.2 3]";
+//     // std::string allowedChar = "0123456789. ";
+//     // std::cout<< "temp:" << temp << std::endl;
+//     // temp.erase(temp.length()-1, 1); //erasing the last character ']'
+//     // std::cout<< "temp after erasing last:" << temp << std::endl;
+//     // temp.erase(0, 1); //erasing the first character '['
+//     // std::cout<< "temp after erasing first:" << temp << std::endl;
+//     // for(int i=0; i<temp.length(); i++){
+//     //     if(allowedChar.find(temp.at(i)) == std::string::npos){
+//     //         throw std::runtime_error("Operator (cin) Error: Invalid Input.");
+//     //     }
+//     // }
+//     // cout<<"COMPLETE"<<endl;
     
 
 
     
-    // cout<<"m3:"<<endl;
-    // zich::Matrix m3 = ++m2;
-    // m3.printMatrix();
+//     // cout<<"m3:"<<endl;
+//     // zich::Matrix m3 = ++m2;
+//     // m3.printMatrix();
 
-    return 0;
-}
+//     return 0;
+// }
