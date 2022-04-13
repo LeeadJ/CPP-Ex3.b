@@ -41,6 +41,7 @@ namespace zich{
         this->_size = other.getSize();
         this->_mat = other.getVector();
     }
+
     //Destructor
     Matrix::~Matrix(){};
 
@@ -139,6 +140,7 @@ namespace zich{
         }
         return (*this = *this + other);
     }
+
     //Operator (-=):
     Matrix& Matrix::operator -= (const Matrix& other){
         if(this->getRow() != other.getRow() || this->getColumn() != other.getColumn()){
@@ -146,6 +148,7 @@ namespace zich{
         }
         return (*this = *this - other);
     }
+
     //Operator (*=):
     Matrix& Matrix::operator *= (const Matrix& other){
         if(this->getColumn() != other.getRow()){
@@ -153,10 +156,12 @@ namespace zich{
         }
         return (*this = *this * other);
     }
+
     //Operator (*= num):
     Matrix& Matrix::operator *= (const double num){
         return (*this = num * (*this));
     }
+
     //Operator (==):
     bool Matrix::operator == (const Matrix& other) const{
         if(this->getRow() != other.getRow() || this->getColumn() != other.getColumn()){
@@ -209,6 +214,8 @@ namespace zich{
         }
         return this->sum() < other.sum();
     }
+
+
     //Unary Operators:
     //Operator (++prefix):
     Matrix& Matrix::operator ++ () {
@@ -220,6 +227,7 @@ namespace zich{
         this->setVector(vec);
         return *this;
     }
+
     //Operator (--prefix):
     Matrix& Matrix::operator -- () {
         std::vector<double> vec;
@@ -230,6 +238,7 @@ namespace zich{
         this->setVector(vec);
         return *this;
     }
+
     //Operator (- prefix):
     Matrix& Matrix::operator - () {
         std::vector<double> vec;
@@ -240,16 +249,19 @@ namespace zich{
         this->setVector(vec);
         return *this;
     }
+
     //Operator (+ prefix):
     Matrix& Matrix::operator + () {
         return *this;
     }
+
     //Operator (postfix++)):
     Matrix Matrix::operator ++ (int){
         Matrix temp(*this);
         ++(*this);
         return temp;
     }
+
     //Operator (postfix--)):
     Matrix Matrix::operator -- (int){
         Matrix temp(*this);
@@ -267,6 +279,7 @@ namespace zich{
         }
         return Matrix(vec, other.getRow(), other.getColumn());
     }
+    
     //Operator (cout)):
     std::ostream& operator << (std::ostream& out, const Matrix& other){
         int r = other.getRow();
@@ -300,12 +313,12 @@ namespace zich{
         //Using 'std::getline' to convert the instream input to type String:
         std::string input; //for combining the lines
         std::getline(in, input);
-        std::cout << "\ninput:" << input <<std::endl;/////////////////////////////////////////////////////////////////////////
 
         //Test 1) Checking if the string starts with '[' and ends with ']':
         if(input[0] != '[' || input.back() != ']'){
             throw std::runtime_error("Operator (cin) Error: Input missing '[' or ']' character on start/end.");
         }
+
         //Test 2) Checking if the input is not empty:
         std::string test2 = input;
         std::string nums = "0123456789";
@@ -328,61 +341,57 @@ namespace zich{
         //Looping through each index of 'ves_str' to extract the information:
         std::string delimiter = ", [";
         while(input.find(delimiter) != std::string::npos){
-            std::cout << "\nIteration: "<< (row_final+1) << std::endl;/////////////////////////////////////////////////////////////////////////
-            std::cout << "input: "<< input << std::endl;/////////////////////////////////////////////////////////////////////////
             //'token' represents a row from the input. Each token will be stored in 'vec_str':
-            std::string token = input.substr(0, input.find(delimiter));/////////////////////////////////////////////////////////////////////////
-            std::cout << "token:: "<< token << std::endl;/////////////////////////////////////////////////////////////////////////
+            std::string token = input.substr(0, input.find(delimiter));
             vec_str.push_back(token);
             row_final++;
             //After storing the token in 'vec_str', erase and update the input string:
             input.erase(0, input.find(delimiter) + (delimiter.length()-1));
-            std::cout << "input after erase: "<< input << std::endl;/////////////////////////////////////////////////////////////////////////
         }
 
         //Inserting the remaining row from input in 'vec_str':
-        std::cout << "input after WHILE: "<< input << std::endl;/////////////////////////////////////////////////////////////////////////
         // if(input.length() > 0){
         vec_str.push_back(input);
         row_final++;
-        // }
         
-        std::cout << "\nUPDATEING VEC\n" << std::endl;/////////////////////////////////////////////////////////////////////////
         //These 2 variables will help check if the columns are equal between each row:
         int columnCheck=0;
         bool first = true;
+
         //Looping through 'vec_str', checking that each row is valid and updating final variables:
         for(int i=0; i<row_final; i++){
-            std::cout << "\n\n";/////////////////////////////////////////////////////////////////////////
             std::string temp_row = vec_str.at((unsigned long)i);
+
             //Test 3) Checking if each row starts with '[' and ends with ']':
             if(temp_row[0] != '[' || temp_row.back() != ']'){
                 throw std::runtime_error("Operator (cin) Error: Input Row missing '[' or ']' character on start/end.");
             }
-            std::cout<< "temp:" << temp_row << std::endl;/////////////////////////////////////////////////////////////////////////
+
             temp_row.erase(temp_row.length()-1, 1); //erasing the last character ']'
-            std::cout<< "temp after erasing last:" << temp_row << std::endl;/////////////////////////////////////////////////////////////////////////
             temp_row.erase(0, 1); //erasing the first character '['
-            std::cout<< "temp after erasing first:" << temp_row << std::endl;/////////////////////////////////////////////////////////////////////////
 
             std::string allowedChar = "0123456789. "; //These are the allowed characters inbetween each '[ ]' characters per row.
+
             //Test 4) Checking if the current row contains invalid characters:
             for(int i=0; i<temp_row.length(); i++){
                 if(allowedChar.find(temp_row.at((unsigned long)i)) == std::string::npos){
                     throw std::runtime_error("Operator (cin) Error: Input Row contains invalid Character.");
                 }
             }
+
             //Test 5) Checking if there are double-spaces between each number:
             std::string double_space = "  ";
             if(temp_row.find(double_space) != std::string::npos){
                 throw std::runtime_error("Operator (cin) Error: Input row contains Double-Space.");
             }
+
             //Converting the string-numbers into type double:
             std::stringstream Y(temp_row); // Y is an object of stringstream that references 'temp_row' string.
             std::string single_num;
             double currD=0;
             int columnCount=0;
             while(getline(Y, single_num, ' ')){
+
             //Test 6) Checking that each string-number can be converted into type double:
                 try{
                     currD = std::stod(single_num);
@@ -390,90 +399,29 @@ namespace zich{
                 catch(...){
                     throw std::runtime_error("Operator (cin) Error: Unable to convert string-number into type double.");
                 }
-                std::cout << "Inserting currD: " <<currD<<std::endl;/////////////////////////////////////////////////////////////////////////
                 vec_final.push_back(currD);
                 columnCount++;
                 if(first){
                     columnCheck++;
                 }
             }
+
             first=false;
+
             //Test 7) Checking that each column contains the same amount of numbers:
             if(columnCount != columnCheck){
                 throw std::runtime_error("Operator (cin) Error: Input Columns are not equal.");
             }
         }
-        // col_final = vec_final.size()/row_final;
-
         //Updating the final variables:
         other.setRow(row_final);
-        std::cout <<"Set Row: " << other.getRow()<<std::endl;/////////////////////////////////////////////////////////////////////////
         other.setColumn(columnCheck);
-        std::cout <<"Set Col: " << other.getColumn()<<std::endl;/////////////////////////////////////////////////////////////////////////
         other.setVector(vec_final);
-        std::cout <<"Set Vec: ";/////////////////////////////////////////////////////////////////////////
         for(double d : other.getVector()){
             std::cout << d << " ";
         }
-        
         other.setSize(row_final*col_final);
-        std::cout <<"\nSet Size: " << other.getSize()<<std::endl;/////////////////////////////////////////////////////////////////////////
         return in;
-    }
-    
-        
-        
+    }      
     
 }
-    
-
-
-// int main(){
-//     using namespace std;
-//     std::vector<double> v1 = {0,0,0,0,0,0};
-//     std::vector<double> v2 = {1,1,1,1,1,1};
-//     std::vector<double> v3 = {1,2,0,1,1,1};
-//     std::vector<double> v4 = {2,1,3,1,2,0};
-//     zich::Matrix m1{v3, 3, 2};
-//     zich::Matrix m2({1,1,1,1,1,1}, 3, 2);
-    
-//     m2.printMatrix();
-//     // cout<<"m2:"<<endl;
-//     // m2.printMatrix();
-
-//     // cout<<"m3:"<<endl;
-//     // zich::Matrix m3 = 3.9*m2;
-//     // cout << m3;
-//     string vec = "[1 2.2 3], [4.98 5 6], [77.5 8 9], [0 11 12]";
-//     zich::Matrix m4;
-//     // cout << m4.getColumn()<<endl;
-//     // cout << m4.getRow()<<endl;
-//     // cout << m4.getSize()<<endl;
-//     // m4.printMatrix();
-    
-//     // cout << "Enter string:";
-//     // cin >> m4;
-//     // cout <<m4;
-//     // string temp = "[1 2.2 3]";
-//     // std::string allowedChar = "0123456789. ";
-//     // std::cout<< "temp:" << temp << std::endl;
-//     // temp.erase(temp.length()-1, 1); //erasing the last character ']'
-//     // std::cout<< "temp after erasing last:" << temp << std::endl;
-//     // temp.erase(0, 1); //erasing the first character '['
-//     // std::cout<< "temp after erasing first:" << temp << std::endl;
-//     // for(int i=0; i<temp.length(); i++){
-//     //     if(allowedChar.find(temp.at(i)) == std::string::npos){
-//     //         throw std::runtime_error("Operator (cin) Error: Invalid Input.");
-//     //     }
-//     // }
-//     // cout<<"COMPLETE"<<endl;
-    
-
-
-    
-//     // cout<<"m3:"<<endl;
-//     // zich::Matrix m3 = ++m2;
-//     // m3.printMatrix();
-
-//     return 0;
-// }
