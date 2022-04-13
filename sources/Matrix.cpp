@@ -271,12 +271,13 @@ namespace zich{
     std::ostream& operator << (std::ostream& out, const Matrix& other){
         int r = other.getRow();
         int c = other.getColumn();
+        int counter = 0;
         std::string ans;
         for(int i=0; i<r; i++){
             ans += "[";
             for(int j=0; j<c; j++){
                 std::stringstream stream;
-                stream << std::fixed << std::setprecision(2) << other.getVector()[(unsigned int)(i*c)+(unsigned int)j];
+                stream << other.getVector().at((unsigned int)(counter++));
                 ans += stream.str();
                 stream.str("");
                 ans += " ";
@@ -285,7 +286,7 @@ namespace zich{
             ans += "]\n";
         }
         ans.pop_back();
-        out << ans << std::endl;
+        out << ans;
         return out;
     }
 

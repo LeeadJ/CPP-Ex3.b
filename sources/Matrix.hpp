@@ -11,8 +11,6 @@ namespace zich{
         int _size;
         std::vector<double> _mat;
         
-        
-
     public:
         //Getters
         int getRow() const {return this->_row;}
@@ -77,7 +75,4 @@ namespace zich{
         friend std::istream& operator >> (std::istream& in,  Matrix& other);
         
     };
-    
-
-    
 }
