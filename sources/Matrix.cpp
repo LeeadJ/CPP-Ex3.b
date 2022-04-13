@@ -45,7 +45,7 @@ namespace zich{
             ans += "[";
             for(int j=0; j<c; j++){
                 std::stringstream stream;
-                stream << std::fixed << std::setprecision(2) << this->getVector()[(i*c)+j];
+                stream << std::fixed << std::setprecision(2) << this->getVector()[(unsigned int)(i*c)+(unsigned int)j];
                 ans += stream.str();
                 stream.str("");
                 ans += " ";
@@ -73,8 +73,9 @@ namespace zich{
             throw std::runtime_error("Operator (+) Error: 'This' Matrix and 'other' Matrix Row/Column do not match.");
         }
         std::vector<double> vec;
+        vec.resize((unsigned int)this->getSize());
         for(int i=0; i<this->getSize(); i++){
-            vec.push_back(this->getVector().at(i) + other.getVector().at(i));
+            vec[(unsigned int)i] = this->getVector().at((unsigned int)i) + other.getVector().at((unsigned int)i);
         }
         return Matrix(vec, this->getRow(), this->getColumn());
     }
@@ -85,8 +86,9 @@ namespace zich{
             throw std::runtime_error("Operator (-) Error: 'This' Matrix and 'other' Matrix Row/Column do not match.");
         }
         std::vector<double> vec;
+        vec.resize((unsigned int)this->getSize());
         for(int i=0; i<this->getSize(); i++){
-            vec.push_back(this->getVector().at(i) - other.getVector().at(i));
+            vec[(unsigned int)i] = this->getVector().at((unsigned int)i) - other.getVector().at((unsigned int)i);
         }
         return Matrix(vec, this->getRow(), this->getColumn());
     }
@@ -96,14 +98,14 @@ namespace zich{
         if(this->getColumn() != other.getRow()){
             throw std::runtime_error("Operator (*) Error: Matrix1 Column does not equal Matrix2 Row.");
         }
-        std::vector<double> vec(this->getRow()*other.getColumn(), 0.0);
+        std::vector<double> vec((unsigned long)(this->getRow()*other.getColumn()), 0.0);
         int spot = 0;
         for(int i=0; i<this->getRow(); i++){
             for(int j=0; j<other.getColumn(); j++){
                 for(int k=0; k<this->getColumn(); k++){
                     int index1 = (i*this->getColumn()) + k;
                     int index2 = (k*other.getColumn()) + j;
-                    vec.at(spot) += this->getVector().at(index1) * other.getVector().at(index2);
+                    vec.at((unsigned long)spot) += this->getVector().at((unsigned long)index1) * other.getVector().at((unsigned long)index2);
                 }
                 spot++;
             }
@@ -114,8 +116,9 @@ namespace zich{
     //Operator (mat*num):
     Matrix Matrix::operator * (const double num) const{
         std::vector<double> vec;
+        vec.resize((unsigned int)this->getSize());
         for(int i=0; i<this->getSize(); i++){
-            vec.push_back(this->getVector().at(i) * num);
+            vec[(unsigned int)i] = this->getVector().at((unsigned int)i) * num;
         }
         return Matrix(vec, this->getRow(), this->getColumn());
     }
@@ -151,7 +154,7 @@ namespace zich{
             throw std::runtime_error("Operator (==) Error: 'This' Matrix and 'other' Matrix Row/Column do not match.");
         }
         for(int i=0; i<this->getSize(); i++){
-            if(this->getVector().at(i) != other.getVector().at(i)){
+            if(this->getVector().at((unsigned long)i) != other.getVector().at((unsigned long)i)){
                 return false;
             }
         }
@@ -201,8 +204,9 @@ namespace zich{
     //Operator (++prefix):
     Matrix& Matrix::operator ++ () {
         std::vector<double> vec;
+        vec.resize((unsigned int)this->getSize());
         for(int i=0; i<this->getSize(); i++){
-            vec.push_back(this->getVector().at(i) + 1.0);
+            vec[(unsigned int)i] = this->getVector().at((unsigned int)i) + 1.0;
         }
         this->setVector(vec);
         return *this;
@@ -210,8 +214,9 @@ namespace zich{
     //Operator (--prefix):
     Matrix& Matrix::operator -- () {
         std::vector<double> vec;
+        vec.resize((unsigned int)this->getSize());
         for(int i=0; i<this->getSize(); i++){
-            vec.push_back(this->getVector().at(i) - 1.0);
+            vec[(unsigned int)i] = this->getVector().at((unsigned int)i) - 1.0;
         }
         this->setVector(vec);
         return *this;
@@ -219,8 +224,9 @@ namespace zich{
     //Operator (- prefix):
     Matrix& Matrix::operator - () {
         std::vector<double> vec;
+        vec.resize((unsigned int)this->getSize());
         for(int i=0; i<this->getSize(); i++){
-            vec.push_back(this->getVector().at(i) *(-1.0));
+            vec[(unsigned int)i] = this->getVector().at((unsigned int)i) * -1.0;
         }
         this->setVector(vec);
         return *this;
@@ -246,8 +252,9 @@ namespace zich{
     //Operator (num*Matrix)):
     Matrix operator * (double num, const Matrix& other){
         std::vector<double> vec;
+        vec.resize((unsigned int)other.getSize());
         for(int i=0; i<other.getSize(); i++){
-            vec.push_back(num * other.getVector().at(i));
+            vec[(unsigned int)i] = other.getVector().at((unsigned int)i) * num;
         }
         return Matrix(vec, other.getRow(), other.getColumn());
     }
@@ -260,7 +267,7 @@ namespace zich{
             ans += "[";
             for(int j=0; j<c; j++){
                 std::stringstream stream;
-                stream << std::fixed << std::setprecision(2) << other.getVector()[(i*c)+j];
+                stream << std::fixed << std::setprecision(2) << other.getVector()[(unsigned int)(i*c)+(unsigned int)j];
                 ans += stream.str();
                 stream.str("");
                 ans += " ";
@@ -296,7 +303,7 @@ namespace zich{
         test2.erase(test2.length()-1, 1); //erasing the last character ']'
         test2.erase(0, 1); //erasing the first character '['
         for(int i=0; i<test2.length(); i++){
-            if(nums.find(test2.at(i)) != std::string::npos){
+            if(nums.find(test2.at((unsigned long)i)) != std::string::npos){
                 test2Count++;
             }
         }
@@ -337,7 +344,7 @@ namespace zich{
         //Looping through 'vec_str', checking that each row is valid and updating final variables:
         for(int i=0; i<row_final; i++){
             std::cout << "\n\n";/////////////////////////////////////////////////////////////////////////
-            std::string temp_row = vec_str.at(i);
+            std::string temp_row = vec_str.at((unsigned long)i);
             //Test 3) Checking if each row starts with '[' and ends with ']':
             if(temp_row[0] != '[' || temp_row.back() != ']'){
                 throw std::runtime_error("Operator (cin) Error: Input Row missing '[' or ']' character on start/end.");
@@ -351,7 +358,7 @@ namespace zich{
             std::string allowedChar = "0123456789. "; //These are the allowed characters inbetween each '[ ]' characters per row.
             //Test 4) Checking if the current row contains invalid characters:
             for(int i=0; i<temp_row.length(); i++){
-                if(allowedChar.find(temp_row.at(i)) == std::string::npos){
+                if(allowedChar.find(temp_row.at((unsigned long)i)) == std::string::npos){
                     throw std::runtime_error("Operator (cin) Error: Input Row contains invalid Character.");
                 }
             }
