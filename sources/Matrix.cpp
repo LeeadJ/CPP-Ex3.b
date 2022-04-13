@@ -279,7 +279,7 @@ namespace zich{
         }
         return Matrix(vec, other.getRow(), other.getColumn());
     }
-    
+
     //Operator (cout)):
     std::ostream& operator << (std::ostream& out, const Matrix& other){
         int r = other.getRow();
